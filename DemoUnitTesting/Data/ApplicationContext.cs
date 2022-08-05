@@ -14,6 +14,10 @@ namespace DemoUnitTesting.Data
 
     public class ApplicationContext : DbContext, IApplicationContext
     {
+        public ApplicationContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public DbSet<Product> Products => Set<Product>();
     }
 }

@@ -1,5 +1,5 @@
 ﻿using DemoUnitTesting.Data;
-using DemoUnitTesting.Domain.AWEcommerce.Models;
+using DemoUnitTesting.Domain;
 using DemoUnitTesting.Domain.Entities;
 
 using MediatR;
@@ -29,12 +29,12 @@ namespace DemoUnitTesting.Application.Mediatr.AddProduct
                 return "ERROR_CODE_02";
             }
 
-            if (request.Price < 0)
+            if (request.Price <= 0)
             {
                 return "ERROR_CODE_03";
             }
 
-            bool existProductName = await  _context.Products.AnyAsync(x => x.Name == request.Name, cancellationToken);
+            bool existProductName = await _context.Products.AnyAsync(x => x.Name == request.Name, cancellationToken);
 
             if (existProductName)
             {

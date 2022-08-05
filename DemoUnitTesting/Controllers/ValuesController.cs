@@ -1,7 +1,6 @@
 ﻿
-using AWEcommerce.Api.Infrastructure.Extensions;
-
 using DemoUnitTesting.Application.Mediatr.AddProduct;
+using DemoUnitTesting.Extensions;
 
 using MediatR;
 

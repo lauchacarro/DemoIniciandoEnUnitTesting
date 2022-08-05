@@ -1,7 +1,6 @@
-﻿namespace AWEcommerce.Api.Infrastructure.Extensions
+﻿namespace DemoUnitTesting.Extensions
 {
-
-    using DemoUnitTesting.Domain.AWEcommerce.Models;
+    using DemoUnitTesting.Domain;
 
     using Microsoft.AspNetCore.Mvc;
 
