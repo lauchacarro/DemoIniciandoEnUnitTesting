@@ -2,6 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
+
 namespace DemoUnitTesting.Data
 {
 
@@ -9,7 +10,7 @@ namespace DemoUnitTesting.Data
     {
         DbSet<Product> Products { get; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken  = default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 
     public class ApplicationContext : DbContext, IApplicationContext

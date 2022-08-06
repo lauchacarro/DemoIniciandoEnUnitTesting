@@ -1,9 +1,5 @@
 ﻿namespace DemoUnitTesting.Domain
 {
-
-    using System.Collections.Generic;
-    using System.Linq;
-
     public class Result
     {
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using System;
 
-namespace DemoUnitTesting.Tests
+namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
 {
     internal class MockObject
     {

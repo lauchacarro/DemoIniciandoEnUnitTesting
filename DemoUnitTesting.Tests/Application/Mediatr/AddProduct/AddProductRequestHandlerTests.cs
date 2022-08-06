@@ -43,7 +43,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
             // Assert
 
             Assert.False(actual.Succeeded);
-            Assert.Equal("ERROR_CODE_01", actual.Error);
+            Assert.Equal("ERROR_CODE_A1", actual.Error);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
             // Assert
 
             Assert.False(actual.Succeeded);
-            Assert.Equal("ERROR_CODE_02", actual.Error);
+            Assert.Equal("ERROR_CODE_A2", actual.Error);
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
             // Assert
 
             Assert.False(actual.Succeeded);
-            Assert.Equal("ERROR_CODE_03", actual.Error);
+            Assert.Equal("ERROR_CODE_A3", actual.Error);
         }
 
         [Fact]
@@ -93,6 +93,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
             MockObject mockObject = new();
 
             mockObject.ApplicationContext.Products.Add(new Product(PRODUCT_NAME, null, 1, true));
+
             await mockObject.ApplicationContext.SaveChangesAsync(default);
 
             var handler = new AddProductRequestHandler(mockObject.ApplicationContext);
@@ -104,7 +105,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
             // Assert
 
             Assert.False(actual.Succeeded);
-            Assert.Equal("ERROR_CODE_04", actual.Error);
+            Assert.Equal("ERROR_CODE_A4", actual.Error);
         }
     }
 }

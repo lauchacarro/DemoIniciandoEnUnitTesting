@@ -1,5 +1,5 @@
-using DemoUnitTesting;
 using DemoUnitTesting.Data;
+using DemoUnitTesting.Domain;
 
 using MediatR;
 
@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMediatR(typeof(WeatherForecast).Assembly);
+builder.Services.AddMediatR(typeof(Result).Assembly);
 builder.Services.AddDbContext<IApplicationContext, ApplicationContext>(o => o.UseInMemoryDatabase("Demo"));
 
 var app = builder.Build();

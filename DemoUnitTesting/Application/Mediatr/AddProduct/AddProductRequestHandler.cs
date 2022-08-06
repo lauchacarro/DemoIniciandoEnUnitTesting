@@ -21,24 +21,24 @@ namespace DemoUnitTesting.Application.Mediatr.AddProduct
         {
             if (request.Name.Length < 3)
             {
-                return "ERROR_CODE_01";
+                return "ERROR_CODE_A1";
             }
 
             if (request.Description is not null && request.Description.Length < 3)
             {
-                return "ERROR_CODE_02";
+                return "ERROR_CODE_A2";
             }
 
             if (request.Price <= 0)
             {
-                return "ERROR_CODE_03";
+                return "ERROR_CODE_A3";
             }
 
             bool existProductName = await _context.Products.AnyAsync(x => x.Name == request.Name, cancellationToken);
 
             if (existProductName)
             {
-                return "ERROR_CODE_04";
+                return "ERROR_CODE_A4";
             }
 
             Product product = new(request.Name, request.Description, request.Price, true);

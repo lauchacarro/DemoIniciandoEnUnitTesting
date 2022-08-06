@@ -2,6 +2,12 @@
 {
     public class Product
     {
+        public Product(int id, string name, string? description, double price, bool isActive)
+            : this(name, description, price, isActive)
+        {
+            Id = id;
+        }
+
         public Product(string name, string? description, double price, bool isActive)
         {
             Name = name;
