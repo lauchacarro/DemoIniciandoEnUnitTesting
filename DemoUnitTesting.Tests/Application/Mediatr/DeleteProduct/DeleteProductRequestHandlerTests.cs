@@ -7,10 +7,12 @@ using Xunit;
 
 namespace DemoUnitTesting.Tests.Application.Mediatr.DeleteProduct
 {
+    [Trait("Products - DeleteProduct", value: "Unit tests for DeleteProduct use case")]
+
     public class DeleteProductRequestHandlerTests
     {
         [Fact]
-        public async Task Delete_ExistingProduct_ReturnSuccess()
+        public async Task When_ProductExists_Expect_ReturnSuccess()
         {
             // Arrange
 
@@ -35,7 +37,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.DeleteProduct
         }
 
         [Fact]
-        public async Task Delete_InexistingProduct_ReturnErrorCode()
+        public async Task When_ProductNotExists_Expect_ReturnErrorCode()
         {
             // Arrange
 

@@ -7,10 +7,12 @@ using Xunit;
 
 namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
 {
+    [Trait("Products - AddProduct", value: "Unit tests for AddProduct use case")]
+
     public class AddProductRequestHandlerTests
     {
         [Fact]
-        public async Task Add_ValidProduct_ReturnSuccess()
+        public async Task When_ValidRequest_Expect_ReturnSuccess()
         {
             // Arrange
 
@@ -28,7 +30,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
         }
 
         [Fact]
-        public async Task Add_EmptyName_ReturnErrorCode()
+        public async Task When_NameIsEmpty_Expect_ReturnErrorCode()
         {
             // Arrange
 
@@ -47,7 +49,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
         }
 
         [Fact]
-        public async Task Add_ShortDescription_ReturnErrorCode()
+        public async Task When_DescriptionIsShort_Expect_ReturnErrorCode()
         {
             // Arrange
 
@@ -66,7 +68,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
         }
 
         [Fact]
-        public async Task Add_ZeroPrice_ReturnErrorCode()
+        public async Task When_PriceIsEqualsOrLessThanZero_Expect_ReturnErrorCode()
         {
             // Arrange
 
@@ -85,7 +87,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
         }
 
         [Fact]
-        public async Task Add_AlreadyExistsName_ReturnErrorCode()
+        public async Task When_NameAlreadyExist_Expect_ReturnErrorCode()
         {
             // Arrange
             const string PRODUCT_NAME = "Cars";

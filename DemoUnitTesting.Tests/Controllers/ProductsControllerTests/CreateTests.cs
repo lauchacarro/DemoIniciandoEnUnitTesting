@@ -16,7 +16,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
     public class CreateTests
     {
         [Fact]
-        public async Task Create_ValidProduct_ReturnOkResponse()
+        public async Task When_ResultIsSuccess_Expect_200OkResponse()
         {
             // Arrange
 
@@ -47,7 +47,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 
 
         [Fact]
-        public async Task Create_ErrorCode_ReturnBadRequest()
+        public async Task When_ResultIsError_Expect_400BadRequestResponse()
         {
             // Arrange
 

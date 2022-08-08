@@ -15,7 +15,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
     public class GetTests
     {
         [Fact]
-        public async Task Get_ExistingProduct_ReturnOkResult()
+        public async Task When_ResultIsSuccess_Expect_200OkResponse()
         {
             // Arrange
             MockObject mockObject = new MockObject();
@@ -45,7 +45,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
         }
 
         [Fact]
-        public async Task Get_InexistingProduct_ReturnBadRequest()
+        public async Task When_ResultIsError_Expect_400BadRequestResponse()
         {
             // Arrange
             MockObject mockObject = new MockObject();

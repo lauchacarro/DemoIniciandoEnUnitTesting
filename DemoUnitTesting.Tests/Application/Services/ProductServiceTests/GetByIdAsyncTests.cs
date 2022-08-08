@@ -9,10 +9,12 @@ using Xunit;
 
 namespace DemoUnitTesting.Tests.Application.Services.ProductServiceTests
 {
+    [Trait("Products - GetById", "Unit tests for GetById use case")]
+
     public class GetByIdAsyncTests
     {
         [Fact]
-        public async Task Get_ExistingProduct_ReturnSuccess()
+        public async Task When_ProductExists_Expect_ReturnSuccess()
         {
             // Arrange
             MockObject mockObject = new MockObject();
@@ -47,7 +49,7 @@ namespace DemoUnitTesting.Tests.Application.Services.ProductServiceTests
         }
 
         [Fact]
-        public async Task Get_InexistingProduct_ReturnErrorCode()
+        public async Task When_ProductNotExists_Expect_ReturnErrorCode()
         {
             // Arrange
             MockObject mockObject = new MockObject();
