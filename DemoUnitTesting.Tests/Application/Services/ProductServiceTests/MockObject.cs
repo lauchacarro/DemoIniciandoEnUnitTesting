@@ -1,4 +1,6 @@
-﻿using DemoUnitTesting.Data;
+﻿using AutoFixture;
+
+using DemoUnitTesting.Data;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +22,12 @@ namespace DemoUnitTesting.Tests.Application.Services.ProductServiceTests
             ApplicationContext = new ApplicationContext(options);
 
             HttpContextAccessor = new Mock<IHttpContextAccessor>();
+            Fixture = new();
         }
 
         public IApplicationContext ApplicationContext { get; set; }
         public Mock<IHttpContextAccessor> HttpContextAccessor { get; set; }
+
+        public Fixture Fixture { get; set; }
     }
 }

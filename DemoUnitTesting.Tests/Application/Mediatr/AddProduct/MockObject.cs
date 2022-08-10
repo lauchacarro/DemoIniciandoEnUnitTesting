@@ -1,4 +1,6 @@
-﻿using DemoUnitTesting.Data;
+﻿using AutoFixture;
+
+using DemoUnitTesting.Data;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +17,13 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
              .Options;
 
             ApplicationContext = new ApplicationContext(options);
+
+            Fixture = new();
         }
 
         public IApplicationContext ApplicationContext { get; set; }
+
+        public Fixture Fixture { get; set; }
+
     }
 }

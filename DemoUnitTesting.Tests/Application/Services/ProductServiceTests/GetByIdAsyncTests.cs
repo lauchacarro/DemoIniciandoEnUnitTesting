@@ -1,7 +1,11 @@
-﻿using DemoUnitTesting.Application.Services;
+﻿using AutoFixture;
+
+using DemoUnitTesting.Application.Services;
 using DemoUnitTesting.Domain.Entities;
 
 using Microsoft.AspNetCore.Http;
+
+using Moq;
 
 using System.Threading.Tasks;
 
@@ -23,14 +27,16 @@ namespace DemoUnitTesting.Tests.Application.Services.ProductServiceTests
 
             var context = new DefaultHttpContext();
 
-            context.Request.Headers["Tenant-ID"] = "abcd";
+            context.Request.Headers["Tenant-ID"] = It.IsAny<string>();
 
             mockObject.HttpContextAccessor.Setup(_ => _.HttpContext).Returns(context);
 
 
             // Seteo información al Mock de ApplicationContext
 
-            mockObject.ApplicationContext.Products.Add(new Product("Cars", null, 1, true));
+            var product = mockObject.Fixture.Create<Product>();
+
+            mockObject.ApplicationContext.Products.Add(product);
 
             await mockObject.ApplicationContext.SaveChangesAsync(default);
 
@@ -41,7 +47,7 @@ namespace DemoUnitTesting.Tests.Application.Services.ProductServiceTests
 
             // Act
 
-            var actual = await service.GetByIdAsync(1);
+            var actual = await service.GetByIdAsync(product.Id);
 
             // Assert
 
@@ -60,7 +66,7 @@ namespace DemoUnitTesting.Tests.Application.Services.ProductServiceTests
 
             // Act
 
-            var actual = await service.GetByIdAsync(1);
+            var actual = await service.GetByIdAsync(mockObject.Fixture.Create<int>());
 
             // Assert
 

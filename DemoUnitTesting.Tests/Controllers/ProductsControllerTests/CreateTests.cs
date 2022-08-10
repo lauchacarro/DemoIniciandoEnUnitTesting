@@ -1,4 +1,6 @@
-﻿using DemoUnitTesting.Application.Mediatr.AddProduct;
+﻿using AutoFixture.Xunit2;
+
+using DemoUnitTesting.Application.Mediatr.AddProduct;
 using DemoUnitTesting.Controllers;
 using DemoUnitTesting.Domain;
 
@@ -15,18 +17,16 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 {
     public class CreateTests
     {
-        [Fact]
-        public async Task When_ResultIsSuccess_Expect_200OkResponse()
+        [Theory, AutoData]
+        public async Task When_ResultIsSuccess_Expect_200OkResponse(AddProductResponse response)
         {
             // Arrange
 
-            MockObject mockObject = new MockObject();
-
-            var productResponse = new AddProductResponse(1, "Cars", "Cars", 10, true);
+            MockObject mockObject = new();
 
             mockObject.Mediator
             .Setup(m => m.Send(It.IsAny<AddProductRequest>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(productResponse);
+            .ReturnsAsync(response);
 
 
             ProductsController controller = new ProductsController(
@@ -41,13 +41,13 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 
             var okObjectResult = Assert.IsType<OkObjectResult>(actual);
 
-            var productResult = Assert.IsType<Result<AddProductResponse>>(okObjectResult.Value);
+            Assert.IsType<Result<AddProductResponse>>(okObjectResult.Value);
 
         }
 
 
-        [Fact]
-        public async Task When_ResultIsError_Expect_400BadRequestResponse()
+        [Theory, AutoData]
+        public async Task When_ResultIsError_Expect_400BadRequestResponse(string errorCode)
         {
             // Arrange
 
@@ -55,7 +55,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 
             mockObject.Mediator
             .Setup(m => m.Send(It.IsAny<AddProductRequest>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync("ERROR_CODE_X");
+            .ReturnsAsync(errorCode);
 
 
             ProductsController controller = new ProductsController(
@@ -72,7 +72,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 
             var productResult = Assert.IsType<Result<AddProductResponse>>(badRequestResult.Value);
 
-            Assert.Equal("ERROR_CODE_X", productResult.Error);
+            Assert.Equal(errorCode, productResult.Error);
         }
     }
 }

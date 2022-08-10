@@ -1,4 +1,6 @@
-﻿using DemoUnitTesting.Controllers;
+﻿using AutoFixture.Xunit2;
+
+using DemoUnitTesting.Controllers;
 using DemoUnitTesting.Domain;
 using DemoUnitTesting.Domain.Entities;
 
@@ -14,13 +16,11 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 {
     public class GetTests
     {
-        [Fact]
-        public async Task When_ResultIsSuccess_Expect_200OkResponse()
+        [Theory, AutoData]
+        public async Task When_ResultIsSuccess_Expect_200OkResponse(Product product)
         {
             // Arrange
             MockObject mockObject = new MockObject();
-
-            var product = new Product(1, "Cars", "Cars", 10, true);
 
             mockObject.ProductService
                 .Setup(x => x.GetByIdAsync(It.IsAny<int>()))
@@ -33,7 +33,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 
             // Act
 
-            var actual = await controller.Get(1);
+            var actual = await controller.Get(It.IsAny<int>());
 
             // Assert
 
@@ -44,17 +44,15 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
             Assert.Equal(product, productResult.Data);
         }
 
-        [Fact]
-        public async Task When_ResultIsError_Expect_400BadRequestResponse()
+        [Theory, AutoData]
+        public async Task When_ResultIsError_Expect_400BadRequestResponse(string errorCode)
         {
             // Arrange
             MockObject mockObject = new MockObject();
 
-            var product = new Product(1, "Cars", "Cars", 10, true);
-
             mockObject.ProductService
                 .Setup(x => x.GetByIdAsync(It.IsAny<int>()))
-                .ReturnsAsync(Result<Product>.Failure("ERROR_CODE_X"));
+                .ReturnsAsync(errorCode);
 
 
             ProductsController controller = new ProductsController(
@@ -63,7 +61,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 
             // Act
 
-            var actual = await controller.Get(1);
+            var actual = await controller.Get(It.IsAny<int>());
 
             // Assert
 
@@ -71,7 +69,7 @@ namespace DemoUnitTesting.Tests.Controllers.ProductsControllerTests
 
             var result = Assert.IsType<Result<Product>>(okObjectResult.Value);
 
-            Assert.Equal("ERROR_CODE_X", result.Error);
+            Assert.Equal(errorCode, result.Error);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using DemoUnitTesting.Application.Mediatr.DeleteProduct;
+﻿using AutoFixture;
+
+
+using DemoUnitTesting.Application.Mediatr.DeleteProduct;
 using DemoUnitTesting.Domain.Entities;
 
 using System.Threading.Tasks;
@@ -16,20 +19,21 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.DeleteProduct
         {
             // Arrange
 
-            const string PRODUCT_NAME = "Cars";
-
             MockObject mockObject = new();
 
-            mockObject.ApplicationContext.Products.Add(new Product(PRODUCT_NAME, null, 1, true));
+            var product = mockObject.Fixture.Create<Product>();
+
+            mockObject.ApplicationContext.Products.Add(product);
 
             await mockObject.ApplicationContext.SaveChangesAsync(default);
 
+            DeleteProductRequest request = new(product.Id);
 
             var handler = new DeleteProductRequestHandler(mockObject.ApplicationContext);
 
             // Act
 
-            var actual = await handler.Handle(new DeleteProductRequest(1), default);
+            var actual = await handler.Handle(request, default);
 
             // Assert
 
@@ -43,11 +47,13 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.DeleteProduct
 
             MockObject mockObject = new();
 
+            DeleteProductRequest request = new(mockObject.Fixture.Create<int>());
+
             var handler = new DeleteProductRequestHandler(mockObject.ApplicationContext);
 
             // Act
 
-            var actual = await handler.Handle(new DeleteProductRequest(1), default);
+            var actual = await handler.Handle(request, default);
 
             // Assert
 

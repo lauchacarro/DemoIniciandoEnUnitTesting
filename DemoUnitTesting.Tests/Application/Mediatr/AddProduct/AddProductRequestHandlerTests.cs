@@ -1,6 +1,12 @@
-﻿using DemoUnitTesting.Application.Mediatr.AddProduct;
+﻿using AutoFixture;
+using AutoFixture.Xunit2;
+
+using DemoUnitTesting.Application.Mediatr.AddProduct;
 using DemoUnitTesting.Domain.Entities;
 
+using Moq;
+
+using System.Threading;
 using System.Threading.Tasks;
 
 using Xunit;
@@ -11,8 +17,8 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
 
     public class AddProductRequestHandlerTests
     {
-        [Fact]
-        public async Task When_ValidRequest_Expect_ReturnSuccess()
+        [Theory, AutoData]
+        public async Task When_ValidRequest_Expect_ReturnSuccess(AddProductRequest request)
         {
             // Arrange
 
@@ -22,7 +28,7 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
 
             // Act
 
-            var actual = await handler.Handle(new AddProductRequest("Cars", "Cars", 2), default);
+            var actual = await handler.Handle(request, It.IsAny<CancellationToken>());
 
             // Assert
 
@@ -38,9 +44,13 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
 
             var handler = new AddProductRequestHandler(mockObject.ApplicationContext);
 
+            var request = new AddProductRequest("",
+                mockObject.Fixture.Create<string>(),
+                mockObject.Fixture.Create<double>());
+
             // Act
 
-            var actual = await handler.Handle(new AddProductRequest(string.Empty, string.Empty, 2), default);
+            var actual = await handler.Handle(request, default);
 
             // Assert
 
@@ -57,9 +67,13 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
 
             var handler = new AddProductRequestHandler(mockObject.ApplicationContext);
 
+            var request = new AddProductRequest(mockObject.Fixture.Create<string>(),
+                "A",
+                mockObject.Fixture.Create<double>());
+
             // Act
 
-            var actual = await handler.Handle(new AddProductRequest("Car", "A", 2), default);
+            var actual = await handler.Handle(request, default);
 
             // Assert
 
@@ -76,9 +90,13 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
 
             var handler = new AddProductRequestHandler(mockObject.ApplicationContext);
 
+            var request = new AddProductRequest(mockObject.Fixture.Create<string>(),
+                mockObject.Fixture.Create<string>(),
+                0);
+
             // Act
 
-            var actual = await handler.Handle(new AddProductRequest("Cars", null, 0), default);
+            var actual = await handler.Handle(request, default);
 
             // Assert
 
@@ -90,19 +108,24 @@ namespace DemoUnitTesting.Tests.Application.Mediatr.AddProduct
         public async Task When_NameAlreadyExist_Expect_ReturnErrorCode()
         {
             // Arrange
-            const string PRODUCT_NAME = "Cars";
 
             MockObject mockObject = new();
 
-            mockObject.ApplicationContext.Products.Add(new Product(PRODUCT_NAME, null, 1, true));
+            var product = mockObject.Fixture.Create<Product>();
+
+            mockObject.ApplicationContext.Products.Add(product);
 
             await mockObject.ApplicationContext.SaveChangesAsync(default);
+
+            var request = new AddProductRequest(product.Name,
+                mockObject.Fixture.Create<string>(),
+                mockObject.Fixture.Create<double>());
 
             var handler = new AddProductRequestHandler(mockObject.ApplicationContext);
 
             // Act
 
-            var actual = await handler.Handle(new AddProductRequest(PRODUCT_NAME, null, 1), default);
+            var actual = await handler.Handle(request, default);
 
             // Assert
 
