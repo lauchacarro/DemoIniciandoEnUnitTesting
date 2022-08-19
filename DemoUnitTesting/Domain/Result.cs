@@ -1,5 +1,8 @@
-﻿namespace DemoUnitTesting.Domain
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DemoUnitTesting.Domain
 {
+    [ExcludeFromCodeCoverage]
     public class Result
     {
 
@@ -34,6 +37,7 @@
             => result.Succeeded;
     }
 
+    [ExcludeFromCodeCoverage]
     public class Result<TData> : Result
     {
 
